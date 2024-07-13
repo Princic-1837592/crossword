@@ -27,6 +27,7 @@ function emptyGrid() {
             input.className = "input";
             input.onkeydown = onInput;
             input.autocomplete = "off";
+            input.addEventListener("auxclick", changeOrientation)
             cell.appendChild(input);
         }
         crossword.appendChild(row);
@@ -111,8 +112,8 @@ function fill() {
     }
 }
 
-function changeOrientation() {
-    for (const o of this.children) {
+function changeOrientation(_event) {
+    for (const o of document.getElementsByClassName("orientation")) {
         o.classList.toggle("selected");
     }
     horizontal = !horizontal;
