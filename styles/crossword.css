@@ -1,3 +1,8 @@
+#crossword-container {
+    width: max-content;
+    margin: auto;
+}
+
 #crossword {
     display: flex;
     flex-direction: column;
