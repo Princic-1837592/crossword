@@ -1,15 +1,15 @@
 let container = null;
 let crossword = null;
-let rows = 12;
-let cols = 22;
+let rows = null;
+let cols = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < rows.value; i++) {
         const row = document.createElement("div");
         row.id = `row-${i}`;
         row.className = "row";
-        for (let j = 0; j < cols; j++) {
+        for (let j = 0; j < cols.value; j++) {
             const cell = document.createElement("div");
             cell.id = `cell-${i}-${j}`;
             cell.className = "cell";
@@ -59,7 +59,7 @@ function onInput(event) {
         } else if (event.key === "ArrowUp") {
             ni -= 1;
         }
-        if (ni < 0 || ni >= rows || nj < 0 || nj >= cols) {
+        if (ni < 0 || ni >= rows.value || nj < 0 || nj >= cols.value) {
             return;
         }
         const next = document.getElementById(`input-${ni}-${nj}`);
@@ -72,14 +72,43 @@ function toggleBlack(event) {
     this.classList.toggle("black");
     const [i, j] = this.id.split("-").slice(1);
     const input = document.getElementById(`input-${i}-${j}`);
-    input.value = "";
     if (!this.classList.contains("black")) {
         input.focus()
     }
 }
 
+function fill() {
+    let n = 1;
+    for (let i = 0; i < rows.value; i++) {
+        for (let j = 0; j < cols.value; j++) {
+            const cell = document.getElementById(`cell-${i}-${j}`);
+            const number = document.getElementById(`number-${i}-${j}`);
+            number.textContent = "";
+            if (!cell.classList.contains("black")) {
+                const hasFixedBeforeH = j === 0 ||
+                    document.getElementById(`cell-${i}-${j - 1}`).classList.contains("black");
+                const hasSpaceAfterH = j < cols.value - 1 &&
+                    !document.getElementById(`cell-${i}-${j + 1}`).classList.contains("black");
+                const hasFixedBeforeV = i === 0 ||
+                    document.getElementById(`cell-${i - 1}-${j}`).classList.contains("black");
+                const hasSpaceAfterV = i < rows.value - 1 &&
+                    !document.getElementById(`cell-${i + 1}-${j}`).classList.contains("black");
+                if (hasFixedBeforeH && hasSpaceAfterH || hasFixedBeforeV && hasSpaceAfterV) {
+                    number.textContent = `${n}`;
+                    n += 1;
+                }
+            }
+        }
+    }
+
+}
+
 window.onload = function () {
-    container = document.getElementById('container');
-    crossword = document.getElementById('crossword');
+    container = document.getElementById("container");
+    crossword = document.getElementById("crossword");
+    rows = document.getElementById("rows");
+    cols = document.getElementById("cols");
+    document.getElementById("start").addEventListener("click", emptyGrid);
+    document.getElementById("fill").addEventListener("click", fill);
     emptyGrid();
 }

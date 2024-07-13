@@ -7,6 +7,24 @@
 </head>
 <body>
 <div id="container">
+    <div id="toolbar-container">
+        <div id="toolbar">
+            <div id="rows-and-cols" class="category">
+                <label for="rows">
+                    <input type="number" name="rows" id="rows" value="10">
+                </label>
+                <label for="cols">
+                    <input type="number" name="cols" id="cols" value="10">
+                </label>
+                <input id="start" type="button" value="Start">
+            </div>
+            <div class="divisor"></div>
+            <div class="category">
+                <input id="fill" type="button" value="Fill">
+            </div>
+        </div>
+    </div>
+
     <div id="crossword"></div>
 </div>
 <script src="index.js"></script>
