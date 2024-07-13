@@ -3,31 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Crossword</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/crossword.css">
+    <link rel="stylesheet" href="styles/toolbar.css">
 </head>
 <body>
 <div id="container">
     <div id="toolbar-container">
         <div id="toolbar">
-            <div id="rows-and-cols" class="category">
-                <label for="rows">
+            <div id="rows-and-cols" class="toolset">
+                <label>
                     <input type="number" name="rows" id="rows" value="10">
                 </label>
-                <label for="cols">
+                <label>
                     <input type="number" name="cols" id="cols" value="10">
                 </label>
-                <input id="start" type="button" value="Start">
+                <label class="override">
+                    Start
+                    <input id="start" type="button">
+                </label>
             </div>
             <div class="divisor"></div>
-            <div class="category">
-                <input id="fill" type="button" value="Fill">
+            <div class="toolset">
+                <label class="override">
+                    Fill
+                    <input id="fill" type="button">
+                </label>
             </div>
             <div class="divisor"></div>
-            <div class="category">
+            <div class="toolset">
                 <div id="orientations">
                     <div id="horizontal" class="orientation"></div>
                     <div id="vertical" class="orientation"></div>
                 </div>
+            </div>
+            <div class="divisor"></div>
+            <div class="toolset">
+                <div>
+                    <label class="override">
+                        Upload
+                        <input id="upload" name="file" type="file" accept="text/plain">
+                    </label>
+                    <form id="upload-form">
+                    </form>
+                </div>
+                <label class="override">
+                    Download
+                    <input id="download" type="button">
+                </label>
             </div>
         </div>
     </div>

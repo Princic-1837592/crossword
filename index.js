@@ -3,6 +3,7 @@ let crossword = null;
 let rows = null;
 let cols = null;
 let horizontal = true;
+let fileHandler = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
@@ -27,7 +28,7 @@ function emptyGrid() {
             input.className = "input";
             input.onkeydown = onInput;
             input.autocomplete = "off";
-            input.addEventListener("auxclick", changeOrientation)
+            input.addEventListener("auxclick", onWheelClicked)
             cell.appendChild(input);
         }
         crossword.appendChild(row);
@@ -112,11 +113,45 @@ function fill() {
     }
 }
 
-function changeOrientation(_event) {
+function onOrientationsClicked(event) {
+    event.preventDefault();
+    changeOrientation();
+}
+
+function onWheelClicked(event) {
+    event.preventDefault();
+    if (event.which === 2) {
+        changeOrientation();
+    }
+}
+
+function changeOrientation() {
     for (const o of document.getElementsByClassName("orientation")) {
         o.classList.toggle("selected");
     }
     horizontal = !horizontal;
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    console.log(event);
+    console.log(fileHandler.files);
+    const reader = new FileReader();
+    reader.readAsText(fileHandler.files[0]);
+    reader.onload = loadFromFile;
+}
+
+function loadFromFile(event) {
+    console.log(event.target.result);
+}
+
+function autoSubmit(event) {
+    event.preventDefault();
+    document.getElementById("upload-form").requestSubmit();
+}
+
+function download(_event) {
+    console.log("download");
 }
 
 window.onload = function () {
@@ -124,10 +159,20 @@ window.onload = function () {
     crossword = document.getElementById("crossword");
     rows = document.getElementById("rows");
     cols = document.getElementById("cols");
+
     document.getElementById("start").addEventListener("click", emptyGrid);
+
     document.getElementById("fill").addEventListener("click", fill);
-    document.getElementById("orientations").addEventListener("mouseup", changeOrientation);
+
+    document.getElementById("orientations").addEventListener("mouseup", onOrientationsClicked);
     const selected = document.getElementById(horizontal ? "horizontal" : "vertical");
     selected.classList.add("selected");
+
+    document.getElementById("upload-form").addEventListener("submit", handleSubmit);
+    fileHandler = document.getElementById("upload");
+    fileHandler.addEventListener("change", autoSubmit);
+
+    document.getElementById("download").addEventListener("click", download);
+
     emptyGrid();
 }
