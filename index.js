@@ -2,6 +2,7 @@ let container = null;
 let crossword = null;
 let rows = null;
 let cols = null;
+let horizontal = true;
 
 function emptyGrid() {
     crossword.innerHTML = "";
@@ -25,8 +26,8 @@ function emptyGrid() {
             input.id = `input-${i}-${j}`;
             input.className = "input";
             input.onkeydown = onInput;
+            input.autocomplete = "off";
             cell.appendChild(input);
-
         }
         crossword.appendChild(row);
     }
@@ -39,6 +40,14 @@ function onInput(event) {
     const number = document.getElementById(`number-${i}-${j}`);
     if (/^[a-zA-Z]$/.test(event.key)) {
         this.value = event.key.toUpperCase();
+        const ni = parseInt(i) + (horizontal ? 0 : 1);
+        const nj = parseInt(j) + (horizontal ? 1 : 0);
+        const next = document.getElementById(`cell-${ni}-${nj}`);
+        if (next && !next.classList.contains("black")) {
+            document.getElementById(`input-${ni}-${nj}`).focus();
+        } else {
+            this.blur();
+        }
     } else if (event.key === "Backspace") {
         this.value = "";
     } else if (event.key === " ") {
@@ -100,7 +109,13 @@ function fill() {
             }
         }
     }
+}
 
+function changeOrientation() {
+    for (const o of this.children) {
+        o.classList.toggle("selected");
+    }
+    horizontal = !horizontal;
 }
 
 window.onload = function () {
@@ -110,5 +125,8 @@ window.onload = function () {
     cols = document.getElementById("cols");
     document.getElementById("start").addEventListener("click", emptyGrid);
     document.getElementById("fill").addEventListener("click", fill);
+    document.getElementById("orientations").addEventListener("mouseup", changeOrientation);
+    const selected = document.getElementById(horizontal ? "horizontal" : "vertical");
+    selected.classList.add("selected");
     emptyGrid();
 }
