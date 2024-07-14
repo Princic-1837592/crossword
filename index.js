@@ -51,6 +51,7 @@ function emptyGrid() {
         v.classList.add("overlay", "vertical");
         verticals.appendChild(v);
     }
+    blackCounter.textContent = "0";
 }
 
 function selectOverlay(event) {
@@ -177,7 +178,10 @@ function changeOrientation() {
         o.classList.toggle("selected");
     }
     horizontal = !horizontal;
-    document.querySelector(".overlay.selected").classList.remove("selected");
+    const selected = document.querySelector(".overlay.selected");
+    if (selected) {
+        selected.classList.remove("selected");
+    }
 }
 
 function handleSubmit(event) {
@@ -269,6 +273,46 @@ function download(_event) {
     }
 }
 
+function cornici(_event) {
+    rows.value = "13";
+    cols.value = "13";
+    emptyGrid();
+    document.getElementById("cell-6-6").classList.add("black");
+    blackCounter.textContent = "1";
+    for (let i = 0; i < 13; i++) {
+        for (let j = 0; j < 13; j++) {
+            if (i % 2 === 1 && (i <= j && j < 13 - i || 13 - i <= j && j <= i) || j % 2 === 1 && (j <= i && i < 13 - j || 13 - j <= i && i <= j)) {
+                document.getElementById(`cell-${i}-${j}`).classList.add("cornice");
+            }
+        }
+    }
+    for (let i = 0; i < 13; i++) {
+        document.getElementById(`number-${i}-0`).textContent = `${i + 1}`;
+    }
+    for (let c = 0; c < 6; c++) {
+        document.getElementById(`number-${c}-${c}`).textContent = `${c + 1}`;
+        document.getElementById(`number-${c}-${13 - c - 1}`).textContent = `${c + 1}`;
+        document.getElementById(`number-${13 - c - 1}-${c}`).textContent = `${c + 1}`;
+        document.getElementById(`number-${13 - c - 1}-${13 - c - 1}`).textContent = `${c + 1}`;
+    }
+}
+
+function schemaLibero(_event) {
+    rows.value = "12";
+    cols.value = "22";
+    emptyGrid();
+}
+
+function senzaSchema(_event) {
+    schemaLibero(null);
+    for (let i = 0; i < parseInt(rows.value); i++) {
+        document.getElementById(`number-${i}-0`).textContent = `${i + 1}`;
+    }
+    for (let j = 0; j < parseInt(cols.value); j++) {
+        document.getElementById(`number-0-${j}`).textContent = `${j + 1}`;
+    }
+}
+
 window.onload = function () {
     container = document.getElementById("container");
     crossword = document.getElementById("crossword");
@@ -291,6 +335,10 @@ window.onload = function () {
     fileHandler.addEventListener("change", autoSubmit);
 
     document.getElementById("download").addEventListener("click", download);
+
+    document.getElementById("cornici").addEventListener("click", cornici);
+    document.getElementById("schema-libero").addEventListener("click", schemaLibero);
+    document.getElementById("senza-schema").addEventListener("click", senzaSchema);
 
     emptyGrid();
 }

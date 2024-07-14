@@ -130,3 +130,7 @@
 .cell.black .number, .cell.black .input {
     display: none;
 }
+
+.cell.cornice {
+    background-color: #b3b3b3;
+}

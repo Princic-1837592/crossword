@@ -8,8 +8,8 @@
 </head>
 <body>
 <div id="container">
-    <div id="toolbar-container">
-        <div id="toolbar">
+    <div class="toolbar-container">
+        <div class="toolbar">
             <div id="rows-and-cols" class="toolset">
                 <label>
                     <input type="number" name="rows" id="rows" value="10">
@@ -25,7 +25,7 @@
             <div class="divisor"></div>
             <div class="toolset">
                 <label class="override full-height">
-                    Riempi
+                    Numera
                     <input id="fill" type="button">
                 </label>
                 <span id="blacks" class="full-height">
@@ -42,12 +42,12 @@
             <div class="divisor"></div>
             <div class="toolset">
                 <label class="override full-height">
-                    Download
+                    Salva
                     <input id="download" type="button">
                 </label>
                 <div class="full-height">
                     <label class="override">
-                        Upload
+                        Carica
                         <input id="upload" name="file" type="file" accept="application/json">
                     </label>
                     <form id="upload-form"></form>
@@ -59,6 +59,30 @@
         <div id="crossword" class="floating"></div>
         <div id="horizontals" class="floating"></div>
         <div id="verticals" class="floating"></div>
+    </div>
+    <div class="toolbar-container">
+        <div class="toolbar">
+            <div class="toolset">
+                <label class="override full-height">
+                    Cornici
+                    <input id="cornici" type="button">
+                </label>
+            </div>
+            <div class="divisor"></div>
+            <div class="toolset">
+                <label class="override full-height">
+                    Schema libero
+                    <input id="schema-libero" type="button">
+                </label>
+            </div>
+            <div class="divisor"></div>
+            <div class="toolset">
+                <label class="override full-height">
+                    Senza schema
+                    <input id="senza-schema" type="button">
+                </label>
+            </div>
+        </div>
     </div>
 </div>
 <script src="index.js"></script>
