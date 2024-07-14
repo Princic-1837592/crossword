@@ -51,7 +51,20 @@ function onInput(event) {
             this.blur();
         }
     } else if (event.key === "Backspace") {
-        this.value = "";
+        if (this.value === "") {
+            const pi = parseInt(i) - (horizontal ? 0 : 1);
+            const pj = parseInt(j) - (horizontal ? 1 : 0);
+            const prev = document.getElementById(`cell-${pi}-${pj}`);
+            if (prev && !prev.classList.contains("black")) {
+                const prevInput = document.getElementById(`input-${pi}-${pj}`);
+                prevInput.value = "";
+                prevInput.focus();
+            } else {
+                this.blur();
+            }
+        } else {
+            this.value = "";
+        }
     } else if (event.key === " ") {
         number.textContent = "";
     } else if (/^[0-9]$/.test(event.key) && number.textContent.length < 2) {
