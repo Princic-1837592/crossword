@@ -5,6 +5,8 @@ let cols = null;
 let horizontal = true;
 let fileHandler = null;
 let blackCounter = null;
+let horizontals = null;
+let verticals = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
@@ -30,9 +32,34 @@ function emptyGrid() {
             input.onkeydown = onInput;
             input.autocomplete = "off";
             input.addEventListener("auxclick", onWheelClicked)
+            input.addEventListener("focusin", selectOverlay);
             cell.appendChild(input);
         }
         crossword.appendChild(row);
+    }
+    for (let i = 0; i < rows.value; i++) {
+        const h = document.createElement("div");
+        h.id = `horizontal-${i}`;
+        h.classList.add("overlay", "horizontal");
+        horizontals.appendChild(h);
+    }
+    for (let j = 0; j < cols.value; j++) {
+        const v = document.createElement("div");
+        v.id = `vertical-${j}`;
+        v.classList.add("overlay", "vertical");
+        verticals.appendChild(v);
+    }
+}
+
+function selectOverlay(event) {
+    for (const overlay of document.getElementsByClassName("overlay")) {
+        overlay.classList.remove("selected");
+    }
+    const [i, j] = event.target.id.split("-").slice(1);
+    if (horizontal) {
+        document.getElementById(`horizontal-${i}`).classList.add("selected");
+    } else {
+        document.getElementById(`vertical-${j}`).classList.add("selected");
     }
 }
 
@@ -139,6 +166,7 @@ function onWheelClicked(event) {
     event.preventDefault();
     if (event.which === 2) {
         changeOrientation();
+        selectOverlay(event);
     }
 }
 
@@ -147,6 +175,7 @@ function changeOrientation() {
         o.classList.toggle("selected");
     }
     horizontal = !horizontal;
+    document.querySelector(".overlay.selected").classList.remove("selected");
 }
 
 function handleSubmit(event) {
@@ -241,6 +270,8 @@ function download(_event) {
 window.onload = function () {
     container = document.getElementById("container");
     crossword = document.getElementById("crossword");
+    horizontals = document.getElementById("horizontals");
+    verticals = document.getElementById("verticals");
     rows = document.getElementById("rows");
     cols = document.getElementById("cols");
 
