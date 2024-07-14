@@ -4,6 +4,7 @@ let rows = null;
 let cols = null;
 let horizontal = true;
 let fileHandler = null;
+let blackCounter = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
@@ -98,6 +99,9 @@ function toggleBlack(event) {
     const input = document.getElementById(`input-${i}-${j}`);
     if (!this.classList.contains("black")) {
         input.focus()
+        blackCounter.textContent = `${parseInt(blackCounter.textContent) - 1}`;
+    } else {
+        blackCounter.textContent = `${parseInt(blackCounter.textContent) + 1}`;
     }
 }
 
@@ -168,11 +172,13 @@ function loadFromFile(event) {
     rows.value = data.rows;
     cols.value = data.cols;
     emptyGrid();
+    let currentBlacks = 0;
     for (let i = 0; i < data.rows; i++) {
         for (let j = 0; j < data.cols; j++) {
             const cell = document.getElementById(`cell-${i}-${j}`);
             if (blacks[i][j]) {
                 cell.classList.add("black");
+                currentBlacks += 1;
             }
             const number = document.getElementById(`number-${i}-${j}`);
             number.textContent = numbers[i][j];
@@ -180,6 +186,7 @@ function loadFromFile(event) {
             input.value = cells[i][j];
         }
     }
+    blackCounter.textContent = `${currentBlacks}`;
 }
 
 function autoSubmit(event) {
@@ -240,6 +247,7 @@ window.onload = function () {
     document.getElementById("start").addEventListener("click", emptyGrid);
 
     document.getElementById("fill").addEventListener("click", fill);
+    blackCounter = document.getElementById("blacks");
 
     document.getElementById("orientations").addEventListener("mouseup", onOrientationsClicked);
     const selected = document.getElementById(horizontal ? "horizontal" : "vertical");
