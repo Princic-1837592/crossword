@@ -37,6 +37,8 @@ function emptyGrid() {
         }
         crossword.appendChild(row);
     }
+    horizontals.innerHTML = "";
+    verticals.innerHTML = "";
     for (let i = 0; i < rows.value; i++) {
         const h = document.createElement("div");
         h.id = `horizontal-${i}`;

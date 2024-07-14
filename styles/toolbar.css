@@ -2,6 +2,7 @@
     width: max-content;
     margin: 50px auto;
     padding: 10px;
+    user-select: none;
 }
 
 #toolbar-container {
