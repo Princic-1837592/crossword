@@ -25,11 +25,16 @@
     flex-direction: row;
     align-items: center;
     padding: 5px;
-    position: relative;
+    width: max-content;
 }
 
 #toolbar .toolset > * {
     margin: 0 5px;
+}
+
+#toolbar .toolset .full-height {
+    height: 100%;
+    align-content: center;
 }
 
 #toolbar .divisor {
@@ -39,6 +44,7 @@
 }
 
 label.override {
+    display: inline-block;
     width: 100%;
     height: 100%;
     align-content: center;

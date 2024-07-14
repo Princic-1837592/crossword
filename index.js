@@ -134,15 +134,39 @@ function changeOrientation() {
 
 function handleSubmit(event) {
     event.preventDefault();
-    console.log(event);
-    console.log(fileHandler.files);
     const reader = new FileReader();
     reader.readAsText(fileHandler.files[0]);
     reader.onload = loadFromFile;
 }
 
 function loadFromFile(event) {
-    console.log(event.target.result);
+    const data = JSON.parse(event.target.result);
+    const cells = data.cells;
+    const blacks = data.blacks;
+    const numbers = data.numbers;
+    if (![cells.length, blacks.length, numbers.length].every(v => v === data.rows)) {
+        alert("Wrong number of rows detected");
+        return;
+    }
+    if (![cells[0].length, blacks[0].length, numbers[0].length].every(v => v === data.cols)) {
+        alert("Wrong number of columns detected");
+        return;
+    }
+    rows.value = data.rows;
+    cols.value = data.cols;
+    emptyGrid();
+    for (let i = 0; i < data.rows; i++) {
+        for (let j = 0; j < data.cols; j++) {
+            const cell = document.getElementById(`cell-${i}-${j}`);
+            if (blacks[i][j]) {
+                cell.classList.add("black");
+            }
+            const number = document.getElementById(`number-${i}-${j}`);
+            number.textContent = numbers[i][j];
+            const input = document.getElementById(`input-${i}-${j}`);
+            input.value = cells[i][j];
+        }
+    }
 }
 
 function autoSubmit(event) {
@@ -151,7 +175,47 @@ function autoSubmit(event) {
 }
 
 function download(_event) {
-    console.log("download");
+    const currentRows = parseInt(rows.value);
+    const currentCols = parseInt(cols.value);
+    const json = {
+        rows: currentRows,
+        cols: currentCols,
+        cells: Array(currentRows).fill(null).map(() => Array(currentCols).fill(null)),
+        blacks: Array(currentRows).fill(null).map(() => Array(currentCols).fill(null)),
+        numbers: Array(currentRows).fill(null).map(() => Array(currentCols).fill(null)),
+    };
+    json.rows = currentRows;
+    json.cols = currentCols;
+    for (let i = 0; i < json.rows; i++) {
+        for (let j = 0; j < json.cols; j++) {
+            const cell = document.getElementById(`cell-${i}-${j}`);
+            const number = document.getElementById(`number-${i}-${j}`);
+            const input = document.getElementById(`input-${i}-${j}`);
+            json.cells[i][j] = input.value;
+            json.blacks[i][j] = cell.classList.contains("black");
+            json.numbers[i][j] = number.textContent;
+        }
+    }
+
+    // from https://gist.github.com/romgrk/40c89ba3cd077c4f4f42b63ddcf20735
+    const fileBlob = new Blob([JSON.stringify(json, null, 2)], {type: "application/json"})
+    const url = URL.createObjectURL(fileBlob)
+
+    const link = document.createElement('a')
+    link.setAttribute('href', url)
+    link.setAttribute('download', "crossword.json")
+
+    if (document.createEvent) {
+        const event = document.createEvent('MouseEvents')
+        event.initEvent('click', true, true)
+        link.dispatchEvent(event)
+    } else {
+        link.click()
+    }
+
+    if (URL.revokeObjectURL) {
+        URL.revokeObjectURL(url)
+    }
 }
 
 window.onload = function () {
