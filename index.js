@@ -31,6 +31,7 @@ function emptyGrid() {
             input.id = `input-${i}-${j}`;
             input.className = "input";
             input.autocomplete = "off";
+            input.maxLength = 1;
             input.addEventListener("keydown", onInput);
             input.addEventListener("auxclick", onWheelClicked);
             input.addEventListener("focusout", hideOverlay);
