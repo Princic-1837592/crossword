@@ -7,7 +7,7 @@ let fileHandler = null;
 let blackCounter = null;
 let horizontals = null;
 let verticals = null;
-let instructions = null;
+let instructionsModal = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
@@ -324,6 +324,10 @@ function senzaSchema(_event) {
     }
 }
 
+function toggleInstructions(_event) {
+    instructionsModal.classList.toggle("visible");
+}
+
 window.addEventListener(
     "load",
     () => {
@@ -349,6 +353,11 @@ window.addEventListener(
         document.getElementById("cornici").addEventListener("click", cornici);
         document.getElementById("schema-libero").addEventListener("click", schemaLibero);
         document.getElementById("senza-schema").addEventListener("click", senzaSchema);
+
+        instructionsModal = document.getElementById("instructions-container");
+        document.getElementById("toggle-instructions").addEventListener("click", toggleInstructions);
+        document.getElementById("instructions-close").addEventListener("click", toggleInstructions);
+        // document.getElementById("instructions-container").addEventListener("click", toggleInstructions);
 
         emptyGrid();
     }

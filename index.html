@@ -80,13 +80,6 @@
             <div class="divisor"></div>
             <div class="toolset">
                 <label class="override full-height">
-                    Istruzioni
-                    <input id="toggle-instructions" type="button">
-                </label>
-            </div>
-            <div class="divisor"></div>
-            <div class="toolset">
-                <label class="override full-height">
                     Sudoku
                     <input id="sudoku" type="button">
                 </label>
@@ -95,11 +88,44 @@
                     <input id="check-sudoku" type="button">
                 </label>
             </div>
+            <div class="divisor"></div>
+            <div class="toolset">
+                <label class="override full-height">
+                    Comandi
+                    <input id="toggle-instructions" type="button">
+                </label>
+            </div>
         </div>
     </div>
-    <div id="instructions">
-        <p>Ciao</p>
-        ciao
+</div>
+<div id="instructions-container" class="modal">
+    <div id="instructions" class="modal-content">
+        <span id="instructions-close" class="close">&times;</span>
+        <h3>Pulsanti</h3>
+        <ul>
+            <li>Nuovo: crea un nuovo cruciverba vuoto con righe e colonne selezionate.</li>
+            <li>Numera: aggiungi automaticamente i numeri nelle caselle da cui può cominciare una definizione.</li>
+            <li>Salva: scarica il cruciverba per poterlo riaprire in seguito.</li>
+            <li>Carica: riapri un cruciverba scaricato in precedenza.</li>
+        </ul>
+        <ul>
+            <li>Cornici: crea un cruciverba vuoto di "Cornici concentriche".</li>
+            <li>Schema libero: crea un cruciverba vuoto 22&times;12, da riempire con caselle nere a piacere.</li>
+            <li>Senza schema: crea un cruciverba vuoto 22&times;12 e posiziona i numeri sulla prima riga e colonna.</li>
+            <li>Sudoku: inizia una partita a "Sudoku".</li>
+            <li>Controlla: verifica che non ci siano errori nel sudoku.</li>
+        </ul>
+        <h3>Parole crociate</h3>
+        <ul>
+            <li>Tasto destro del mouse: attiva/disattiva casella nera</li>
+            <li>Rotella del mouse: direzione scrittura orizzontale/verticale</li>
+        </ul>
+        Scrivendo o cancellando, il cursore si muove automaticamente nella direzione selezionata.
+        Per posizionare un numero su una casella, seleziona la casella e digita il numero.
+        <h3>Sudoku</h3>
+        Puoi inserire suggerimenti per i numeri premendo Ctrl+numero o Alt+numero.
+        Inserire un numero elimina tutti i suggerimenti e viceversa.
+        Dopo aver premuto il tasto "Controlla", puoi far tornare bianca una casella rossa cancellandone il numero.
     </div>
 </div>
 <script src="index.js"></script>
