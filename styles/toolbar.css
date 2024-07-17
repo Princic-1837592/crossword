@@ -82,14 +82,15 @@ label.override input {
     background-color: black;
 }
 
-#rows-and-cols {
-
-}
-
 #rows-and-cols input {
-    width: 50px;
+    width: 40px;
+    border: 2px solid black;
+    border-radius: 0;
 }
 
+#rows-and-cols input:focus {
+    outline-style: solid;
+}
 
 #orientations {
     position: relative;
