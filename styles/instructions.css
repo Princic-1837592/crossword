@@ -1,0 +1,7 @@
+#instructions {
+    display: none;
+}
+
+#instructions.visible {
+    display: block;
+}
