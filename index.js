@@ -10,7 +10,6 @@ let verticals = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
-    for (let i = 0; i < rows.value; i++) {
     crossword.className = "floating";
     for (let i = 0; i < parseInt(rows.value); i++) {
         const row = document.createElement("div");
@@ -33,7 +32,7 @@ function emptyGrid() {
             input.className = "input";
             input.autocomplete = "off";
             input.addEventListener("keydown", onInput);
-            input.addEventListener("auxclick", onWheelClicked)
+            input.addEventListener("auxclick", onWheelClicked);
             input.addEventListener("focusout", hideOverlay);
             input.addEventListener("focusin", selectOverlay);
             cell.appendChild(input);
