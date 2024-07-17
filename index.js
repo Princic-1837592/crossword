@@ -32,6 +32,7 @@ function emptyGrid() {
             input.onkeydown = onInput;
             input.autocomplete = "off";
             input.addEventListener("auxclick", onWheelClicked)
+            input.addEventListener("focusout", hideOverlay);
             input.addEventListener("focusin", selectOverlay);
             cell.appendChild(input);
         }
@@ -63,6 +64,12 @@ function selectOverlay(event) {
         document.getElementById(`horizontal-${i}`).classList.add("selected");
     } else {
         document.getElementById(`vertical-${j}`).classList.add("selected");
+    }
+}
+
+function hideOverlay(event) {
+    for (const overlay of document.getElementsByClassName("overlay")) {
+        overlay.classList.remove("selected");
     }
 }
 
@@ -158,11 +165,6 @@ function fill() {
             }
         }
     }
-}
-
-function onOrientationsClicked(event) {
-    event.preventDefault();
-    changeOrientation();
 }
 
 function onWheelClicked(event) {
@@ -325,10 +327,6 @@ window.onload = function () {
 
     document.getElementById("fill").addEventListener("click", fill);
     blackCounter = document.getElementById("blacks");
-
-    document.getElementById("orientations").addEventListener("mouseup", onOrientationsClicked);
-    const selected = document.getElementById(horizontal ? "horizontal" : "vertical");
-    selected.classList.add("selected");
 
     document.getElementById("upload-form").addEventListener("submit", handleSubmit);
     fileHandler = document.getElementById("upload");
