@@ -1,4 +1,4 @@
-let container = null;
+let crosswordContainer = null;
 let crossword = null;
 let rows = null;
 let cols = null;
@@ -10,8 +10,23 @@ let verticals = null;
 let instructionsModal = null;
 
 function emptyGrid() {
-    crossword.innerHTML = "";
-    crossword.className = "floating";
+    crosswordContainer.innerHTML = "";
+
+    crossword = document.createElement("div");
+    crossword.id = "crossword";
+    crossword.classList.add("floating");
+    crosswordContainer.appendChild(crossword);
+
+    horizontals = document.createElement("div");
+    horizontals.id = "horizontals";
+    horizontals.classList.add("floating");
+    crosswordContainer.appendChild(horizontals);
+
+    verticals = document.createElement("div");
+    verticals.id = "verticals";
+    verticals.classList.add("floating");
+    crosswordContainer.appendChild(verticals);
+
     for (let i = 0; i < parseInt(rows.value); i++) {
         const row = document.createElement("div");
         row.id = `row-${i}`;
@@ -41,10 +56,7 @@ function emptyGrid() {
         }
         crossword.appendChild(row);
     }
-    horizontals.innerHTML = "";
-    horizontals.style.visibility = "visible";
-    verticals.innerHTML = "";
-    verticals.style.visibility = "visible";
+
     for (let i = 0; i < rows.value; i++) {
         const h = document.createElement("div");
         h.id = `horizontal-${i}`;
@@ -57,6 +69,7 @@ function emptyGrid() {
         v.classList.add("overlay", "vertical");
         verticals.appendChild(v);
     }
+
     blackCounter.textContent = "0";
 }
 
@@ -332,7 +345,7 @@ window.addEventListener(
     "load",
     () => {
 
-        container = document.getElementById("container");
+        crosswordContainer = document.getElementById("crossword-container");
         crossword = document.getElementById("crossword");
         horizontals = document.getElementById("horizontals");
         verticals = document.getElementById("verticals");
