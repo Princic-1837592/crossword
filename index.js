@@ -67,7 +67,7 @@ function selectOverlay(event) {
     }
 }
 
-function hideOverlay(event) {
+function hideOverlay(_event) {
     for (const overlay of document.getElementsByClassName("overlay")) {
         overlay.classList.remove("selected");
     }
