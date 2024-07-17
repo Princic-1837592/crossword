@@ -1,0 +1,118 @@
+.sudoku {
+    .row:nth-child(3n) .cell {
+        border-bottom-width: 4px;
+    }
+
+    .row:first-child .cell {
+        border-top-width: 4px;
+    }
+
+    .cell:nth-child(3n) {
+        border-right-width: 4px;
+    }
+
+    .cell:first-child {
+        border-left-width: 4px;
+    }
+
+    .cell.error {
+        background-color: #ff3c3c;
+    }
+
+    .cell.error .input:focus {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+
+    .cell .annotation {
+        display: inline-block;
+        position: absolute;
+        font-size: 11px;
+        z-index: 2;
+        visibility: hidden;
+    }
+
+    .cell .annotation.visible {
+        visibility: visible;
+    }
+
+    .cell .annotation-1 {
+        top: 1px;
+        left: 1px;
+
+        &:before {
+            content: "1";
+        }
+    }
+
+    .cell .annotation-2 {
+        top: 1px;
+        left: calc(50% - 0.5ch);
+
+        &:before {
+            content: "2";
+        }
+    }
+
+    .cell .annotation-3 {
+        top: 1px;
+        right: 1px;
+
+        &:before {
+            content: "3";
+        }
+    }
+
+    .cell .annotation-4 {
+        top: calc(50% - 1ch);
+        left: 1px;
+
+        &:before {
+            content: "4";
+        }
+    }
+
+    .cell .annotation-5 {
+        top: calc(50% - 1ch);
+        left: calc(50% - 0.5ch);
+
+        &:before {
+            content: "5";
+        }
+    }
+
+    .cell .annotation-6 {
+        top: calc(50% - 1ch);
+        right: 1px;
+
+        &:before {
+            content: "6";
+        }
+    }
+
+    .cell .annotation-7 {
+        bottom: 1px;
+        left: 1px;
+
+        &:before {
+            content: "7";
+        }
+    }
+
+    .cell .annotation-8 {
+        bottom: 1px;
+        left: calc(50% - 0.5ch);
+
+        &:before {
+            content: "8";
+        }
+    }
+
+    .cell .annotation-9 {
+        bottom: 1px;
+        right: 1px;
+
+        &:before {
+            content: "9";
+        }
+    }
+}

@@ -77,6 +77,25 @@ function hideOverlay(_event) {
     }
 }
 
+function handleArrowMove(event, i, j) {
+    let ni = parseInt(i);
+    let nj = parseInt(j);
+    if (event.key === "ArrowRight") {
+        nj += 1;
+    } else if (event.key === "ArrowLeft") {
+        nj -= 1;
+    } else if (event.key === "ArrowDown") {
+        ni += 1;
+    } else if (event.key === "ArrowUp") {
+        ni -= 1;
+    }
+    if (ni < 0 || ni >= rows.value || nj < 0 || nj >= cols.value) {
+        return;
+    }
+    const next = document.getElementById(`input-${ni}-${nj}`);
+    next.focus();
+}
+
 function onInput(event) {
     event.preventDefault();
     const [i, j] = this.id.split("-").slice(1);
@@ -114,22 +133,7 @@ function onInput(event) {
     } else if (event.key === "?") {
         cell.classList.toggle("maybe");
     } else if (/^Arrow/.test(event.key)) {
-        let ni = parseInt(i);
-        let nj = parseInt(j);
-        if (event.key === "ArrowRight") {
-            nj += 1;
-        } else if (event.key === "ArrowLeft") {
-            nj -= 1;
-        } else if (event.key === "ArrowDown") {
-            ni += 1;
-        } else if (event.key === "ArrowUp") {
-            ni -= 1;
-        }
-        if (ni < 0 || ni >= rows.value || nj < 0 || nj >= cols.value) {
-            return;
-        }
-        const next = document.getElementById(`input-${ni}-${nj}`);
-        next.focus();
+        handleArrowMove(event, i, j);
     }
 }
 
