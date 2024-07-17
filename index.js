@@ -11,11 +11,12 @@ let instructions = null;
 
 function emptyGrid() {
     crossword.innerHTML = "";
-    for (let i = 0; i < rows.value; i++) {
+    crossword.className = "floating";
+    for (let i = 0; i < parseInt(rows.value); i++) {
         const row = document.createElement("div");
         row.id = `row-${i}`;
         row.className = "row";
-        for (let j = 0; j < cols.value; j++) {
+        for (let j = 0; j < parseInt(cols.value); j++) {
             const cell = document.createElement("div");
             cell.id = `cell-${i}-${j}`;
             cell.className = "cell";
@@ -30,16 +31,20 @@ function emptyGrid() {
             const input = document.createElement("input");
             input.id = `input-${i}-${j}`;
             input.className = "input";
-            input.onkeydown = onInput;
             input.autocomplete = "off";
-            input.addEventListener("auxclick", onWheelClicked)
+            input.maxLength = 1;
+            input.addEventListener("keydown", onInput);
+            input.addEventListener("auxclick", onWheelClicked);
+            input.addEventListener("focusout", hideOverlay);
             input.addEventListener("focusin", selectOverlay);
             cell.appendChild(input);
         }
         crossword.appendChild(row);
     }
     horizontals.innerHTML = "";
+    horizontals.style.visibility = "visible";
     verticals.innerHTML = "";
+    verticals.style.visibility = "visible";
     for (let i = 0; i < rows.value; i++) {
         const h = document.createElement("div");
         h.id = `horizontal-${i}`;
@@ -65,6 +70,31 @@ function selectOverlay(event) {
     } else {
         document.getElementById(`vertical-${j}`).classList.add("selected");
     }
+}
+
+function hideOverlay(_event) {
+    for (const overlay of document.getElementsByClassName("overlay")) {
+        overlay.classList.remove("selected");
+    }
+}
+
+function handleArrowMove(event, i, j) {
+    let ni = parseInt(i);
+    let nj = parseInt(j);
+    if (event.key === "ArrowRight") {
+        nj += 1;
+    } else if (event.key === "ArrowLeft") {
+        nj -= 1;
+    } else if (event.key === "ArrowDown") {
+        ni += 1;
+    } else if (event.key === "ArrowUp") {
+        ni -= 1;
+    }
+    if (ni < 0 || ni >= rows.value || nj < 0 || nj >= cols.value) {
+        return;
+    }
+    const next = document.getElementById(`input-${ni}-${nj}`);
+    next.focus();
 }
 
 function onInput(event) {
@@ -104,22 +134,7 @@ function onInput(event) {
     } else if (event.key === "?") {
         cell.classList.toggle("maybe");
     } else if (/^Arrow/.test(event.key)) {
-        let ni = parseInt(i);
-        let nj = parseInt(j);
-        if (event.key === "ArrowRight") {
-            nj += 1;
-        } else if (event.key === "ArrowLeft") {
-            nj -= 1;
-        } else if (event.key === "ArrowDown") {
-            ni += 1;
-        } else if (event.key === "ArrowUp") {
-            ni -= 1;
-        }
-        if (ni < 0 || ni >= rows.value || nj < 0 || nj >= cols.value) {
-            return;
-        }
-        const next = document.getElementById(`input-${ni}-${nj}`);
-        next.focus();
+        handleArrowMove(event, i, j);
     }
 }
 
@@ -159,11 +174,6 @@ function fill() {
             }
         }
     }
-}
-
-function onOrientationsClicked(event) {
-    event.preventDefault();
-    changeOrientation();
 }
 
 function onWheelClicked(event) {
@@ -314,40 +324,32 @@ function senzaSchema(_event) {
     }
 }
 
-function toggleInstructions() {
-    console.log(2);
-    instructions.classList.toggle("visible");
-}
+window.addEventListener(
+    "load",
+    () => {
 
-window.onload = function () {
-    container = document.getElementById("container");
-    crossword = document.getElementById("crossword");
-    horizontals = document.getElementById("horizontals");
-    verticals = document.getElementById("verticals");
-    rows = document.getElementById("rows");
-    cols = document.getElementById("cols");
+        container = document.getElementById("container");
+        crossword = document.getElementById("crossword");
+        horizontals = document.getElementById("horizontals");
+        verticals = document.getElementById("verticals");
+        rows = document.getElementById("rows");
+        cols = document.getElementById("cols");
 
-    document.getElementById("start").addEventListener("click", emptyGrid);
+        document.getElementById("start").addEventListener("click", emptyGrid);
 
-    document.getElementById("fill").addEventListener("click", fill);
-    blackCounter = document.getElementById("blacks");
+        document.getElementById("fill").addEventListener("click", fill);
+        blackCounter = document.getElementById("blacks");
 
-    document.getElementById("orientations").addEventListener("mouseup", onOrientationsClicked);
-    const selected = document.getElementById(horizontal ? "horizontal" : "vertical");
-    selected.classList.add("selected");
+        document.getElementById("upload-form").addEventListener("submit", handleSubmit);
+        fileHandler = document.getElementById("upload");
+        fileHandler.addEventListener("change", autoSubmit);
 
-    document.getElementById("upload-form").addEventListener("submit", handleSubmit);
-    fileHandler = document.getElementById("upload");
-    fileHandler.addEventListener("change", autoSubmit);
+        document.getElementById("download").addEventListener("click", download);
 
-    document.getElementById("download").addEventListener("click", download);
+        document.getElementById("cornici").addEventListener("click", cornici);
+        document.getElementById("schema-libero").addEventListener("click", schemaLibero);
+        document.getElementById("senza-schema").addEventListener("click", senzaSchema);
 
-    document.getElementById("cornici").addEventListener("click", cornici);
-    document.getElementById("schema-libero").addEventListener("click", schemaLibero);
-    document.getElementById("senza-schema").addEventListener("click", senzaSchema);
-
-    instructions = document.getElementById("instructions");
-    document.getElementById("toggle-instructions").addEventListener("click", toggleInstructions);
-
-    emptyGrid();
-}
+        emptyGrid();
+    }
+);
