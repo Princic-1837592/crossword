@@ -11,10 +11,12 @@ let verticals = null;
 function emptyGrid() {
     crossword.innerHTML = "";
     for (let i = 0; i < rows.value; i++) {
+    crossword.className = "floating";
+    for (let i = 0; i < parseInt(rows.value); i++) {
         const row = document.createElement("div");
         row.id = `row-${i}`;
         row.className = "row";
-        for (let j = 0; j < cols.value; j++) {
+        for (let j = 0; j < parseInt(cols.value); j++) {
             const cell = document.createElement("div");
             cell.id = `cell-${i}-${j}`;
             cell.className = "cell";
@@ -29,8 +31,8 @@ function emptyGrid() {
             const input = document.createElement("input");
             input.id = `input-${i}-${j}`;
             input.className = "input";
-            input.onkeydown = onInput;
             input.autocomplete = "off";
+            input.addEventListener("keydown", onInput);
             input.addEventListener("auxclick", onWheelClicked)
             input.addEventListener("focusout", hideOverlay);
             input.addEventListener("focusin", selectOverlay);
@@ -39,7 +41,9 @@ function emptyGrid() {
         crossword.appendChild(row);
     }
     horizontals.innerHTML = "";
+    horizontals.style.visibility = "visible";
     verticals.innerHTML = "";
+    verticals.style.visibility = "visible";
     for (let i = 0; i < rows.value; i++) {
         const h = document.createElement("div");
         h.id = `horizontal-${i}`;
@@ -315,28 +319,32 @@ function senzaSchema(_event) {
     }
 }
 
-window.onload = function () {
-    container = document.getElementById("container");
-    crossword = document.getElementById("crossword");
-    horizontals = document.getElementById("horizontals");
-    verticals = document.getElementById("verticals");
-    rows = document.getElementById("rows");
-    cols = document.getElementById("cols");
+window.addEventListener(
+    "load",
+    () => {
 
-    document.getElementById("start").addEventListener("click", emptyGrid);
+        container = document.getElementById("container");
+        crossword = document.getElementById("crossword");
+        horizontals = document.getElementById("horizontals");
+        verticals = document.getElementById("verticals");
+        rows = document.getElementById("rows");
+        cols = document.getElementById("cols");
 
-    document.getElementById("fill").addEventListener("click", fill);
-    blackCounter = document.getElementById("blacks");
+        document.getElementById("start").addEventListener("click", emptyGrid);
 
-    document.getElementById("upload-form").addEventListener("submit", handleSubmit);
-    fileHandler = document.getElementById("upload");
-    fileHandler.addEventListener("change", autoSubmit);
+        document.getElementById("fill").addEventListener("click", fill);
+        blackCounter = document.getElementById("blacks");
 
-    document.getElementById("download").addEventListener("click", download);
+        document.getElementById("upload-form").addEventListener("submit", handleSubmit);
+        fileHandler = document.getElementById("upload");
+        fileHandler.addEventListener("change", autoSubmit);
 
-    document.getElementById("cornici").addEventListener("click", cornici);
-    document.getElementById("schema-libero").addEventListener("click", schemaLibero);
-    document.getElementById("senza-schema").addEventListener("click", senzaSchema);
+        document.getElementById("download").addEventListener("click", download);
 
-    emptyGrid();
-}
+        document.getElementById("cornici").addEventListener("click", cornici);
+        document.getElementById("schema-libero").addEventListener("click", schemaLibero);
+        document.getElementById("senza-schema").addEventListener("click", senzaSchema);
+
+        emptyGrid();
+    }
+);
