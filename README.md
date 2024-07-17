@@ -1,3 +1,3 @@
-# Crossword
+# [Crossword](https://princic-1837592.github.io/crossword/index.html)
 
-Create and customize your own crossword puzzle [here](https://princic-1837592.github.io/crossword/index.html).
+Crea, personalizza e gioca alle parole crociate e sudoku.
