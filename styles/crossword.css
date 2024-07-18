@@ -53,8 +53,9 @@
     border-left-width: 2px;
 }
 
-.overlay.selected {
+#horizontals .overlay.selected, #verticals .overlay.selected {
     background-color: rgba(255, 218, 105, 0.4);
+    mix-blend-mode: overlay;
 }
 
 .row {

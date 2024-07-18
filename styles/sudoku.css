@@ -192,4 +192,5 @@
 #sudoku-cols .overlay.error,
 .sudoku-square.error {
     background-color: rgba(255, 85, 85, 0.5);
+    mix-blend-mode: overlay;
 }
