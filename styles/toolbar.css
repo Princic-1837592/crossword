@@ -63,7 +63,6 @@ label.override input {
 #blacks {
     aspect-ratio: 1;
     text-align: center;
-    z-index: 1;
     position: relative;
     color: white;
     border: 2px solid black;
@@ -105,13 +104,11 @@ label.override input {
     left: 0;
     display: inline-block;
     background-color: #b3b3b3;
-    z-index: 0;
 }
 
 #orientations .orientation.selected {
     background-color: #ffda69;
     border: 1px solid black;
-    z-index: 1;
 }
 
 #horizontal {

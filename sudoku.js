@@ -11,22 +11,22 @@ function emptySudoku(_event) {
 
     sudoku = document.createElement("div");
     sudoku.id = "crossword";
-    sudoku.classList.add("floating", "sudoku");
+    sudoku.classList.add("sudoku", "floating");
     crosswordContainer.appendChild(sudoku);
 
     sudokuRows = document.createElement("div");
     sudokuRows.id = "sudoku-rows";
-    sudokuRows.classList.add("floating");
+    sudokuRows.classList.add("floating", "pass-through");
     crosswordContainer.appendChild(sudokuRows);
 
     sudokuCols = document.createElement("div");
     sudokuCols.id = "sudoku-cols";
-    sudokuCols.classList.add("floating");
+    sudokuCols.classList.add("floating", "pass-through");
     crosswordContainer.appendChild(sudokuCols);
 
     sudokuSquares = document.createElement("div");
     sudokuSquares.id = "sudoku-squares";
-    sudokuSquares.classList.add("floating");
+    sudokuSquares.classList.add("floating", "pass-through");
     crosswordContainer.appendChild(sudokuSquares);
 
     for (let i = 0; i < 9; i++) {
@@ -64,13 +64,13 @@ function emptySudoku(_event) {
     for (let i = 0; i < 9; i++) {
         const r = document.createElement("div");
         r.id = `sudoku-row-${i}`;
-        r.classList.add("overlay", "sudoku-row");
+        r.classList.add("sudoku-row", "overlay", "pass-through");
         sudokuRows.appendChild(r);
     }
     for (let j = 0; j < 9; j++) {
         const c = document.createElement("div");
         c.id = `sudoku-col-${j}`;
-        c.classList.add("overlay", "sudoku-col");
+        c.classList.add("sudoku-col", "overlay", "pass-through");
         sudokuCols.appendChild(c);
     }
     for (let i = 0; i < 3; i++) {
@@ -81,7 +81,7 @@ function emptySudoku(_event) {
         for (let j = 0; j < 3; j++) {
             const ss = document.createElement("div");
             ss.id = `sudoku-square-${i}-${j}`;
-            ss.classList.add("overlay", "sudoku-square");
+            ss.classList.add("sudoku-square", "overlay", "pass-through");
             ssr.appendChild(ss);
         }
     }

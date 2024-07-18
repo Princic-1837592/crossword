@@ -27,7 +27,6 @@
         display: inline-block;
         position: absolute;
         font-size: 11px;
-        z-index: 2;
         visibility: hidden;
     }
 

@@ -19,12 +19,12 @@ function emptyGrid() {
 
     horizontals = document.createElement("div");
     horizontals.id = "horizontals";
-    horizontals.classList.add("floating");
+    horizontals.classList.add("floating", "pass-through");
     crosswordContainer.appendChild(horizontals);
 
     verticals = document.createElement("div");
     verticals.id = "verticals";
-    verticals.classList.add("floating");
+    verticals.classList.add("floating", "pass-through");
     crosswordContainer.appendChild(verticals);
 
     for (let i = 0; i < parseInt(rows.value); i++) {
@@ -60,13 +60,13 @@ function emptyGrid() {
     for (let i = 0; i < rows.value; i++) {
         const h = document.createElement("div");
         h.id = `horizontal-${i}`;
-        h.classList.add("overlay", "horizontal");
+        h.classList.add("horizontal", "overlay", "pass-through");
         horizontals.appendChild(h);
     }
     for (let j = 0; j < cols.value; j++) {
         const v = document.createElement("div");
         v.id = `vertical-${j}`;
-        v.classList.add("overlay", "vertical");
+        v.classList.add("vertical", "overlay", "pass-through");
         verticals.appendChild(v);
     }
 
