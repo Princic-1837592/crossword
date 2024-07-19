@@ -47,16 +47,17 @@
     background-color: black;
 }
 
-label.override {
+label.button {
     display: inline-block;
     width: 100%;
     height: 100%;
     align-content: center;
     padding: 0 5px;
     cursor: pointer;
+    text-decoration: underline;
 }
 
-label.override input {
+label.button input {
     display: none;
 }
 
